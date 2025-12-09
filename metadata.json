@@ -1,0 +1,5 @@
+{
+  "name": "StockFlowAI",
+  "description": "A comprehensive inventory management system featuring supplier registration, product management, and supplier-product associations.",
+  "requestFramePermissions": []
+}
