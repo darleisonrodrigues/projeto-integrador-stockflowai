@@ -32,7 +32,6 @@ WORKDIR /app
 # Persistence Setup
 RUN mkdir -p /app/data
 ENV DB_PATH=/app/data/stockflow.db
-VOLUME ["/app/data"]
 
 # Copy start script
 COPY start.sh .
