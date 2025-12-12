@@ -55,7 +55,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware da Aplicação
-app.use(helmet()); // Proteção de Headers HTTP
+app.use(helmet({
+    contentSecurityPolicy: false, // Necessário para carregar scripts externos (Tailwind CDN) e imagens
+}));
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Permitir carregar imagens
 
 // Rate Limiting (Limitação de taxa de requisições)
