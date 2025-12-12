@@ -1,4 +1,5 @@
-export const API_URL = 'http://localhost:3000';
+// Use environment variable or default to empty string (relative path for same-origin) in production
+export const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:3000');
 
 const getHeaders = (isFormData = false): HeadersInit => {
     const headers: Record<string, string> = {};

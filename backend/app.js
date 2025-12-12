@@ -68,13 +68,19 @@ app.use(limiter);
 
 // Configuração CORS Segura
 const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:5173'];
-app.set('trust proxy', 1); // Trust first proxy (Railway/Load Balancer)
+app.set('trust proxy', 1);
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Permitir requisições sem origem (como apps mobile ou curl)
         if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
+
+        // Normalize: remove trailing slash for comparison
+        const cleanOrigin = origin.replace(/\/$/, '');
+        const cleanAllowed = allowedOrigins.map(url => url.replace(/\/$/, ''));
+
+        if (cleanAllowed.indexOf(cleanOrigin) === -1) {
+            // For debugging purposes, we might want to allow it temporarily or log it better
+            console.error(`CORS Blocked: ${origin}. Allowed: ${allowedOrigins}`);
             var msg = 'A política CORS para este site não permite acesso da origem especificada.';
             return callback(new Error(msg), false);
         }
