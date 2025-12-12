@@ -68,6 +68,8 @@ app.use(limiter);
 
 // Configuração CORS Segura
 const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:5173'];
+app.set('trust proxy', 1); // Trust first proxy (Railway/Load Balancer)
+
 app.use(cors({
     origin: function (origin, callback) {
         // Permitir requisições sem origem (como apps mobile ou curl)
@@ -81,11 +83,6 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Rota Raiz
-app.get('/', (req, res) => {
-    res.send('API do StockFlow AI está rodando! 🚀<br>Acesse a Documentação em <a href="/api-docs">/api-docs</a>');
-});
 
 // Documentação Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
