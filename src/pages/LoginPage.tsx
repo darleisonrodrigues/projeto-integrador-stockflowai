@@ -6,9 +6,10 @@ interface LoginPageProps {
   onLogin: (user: any) => void;
   onForgotPassword: () => void;
   onNotify: (notification: { type: 'success' | 'error' | 'info' | 'warning'; message: string }) => void;
+  allowRegister?: boolean;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onForgotPassword, onNotify }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onForgotPassword, onNotify, allowRegister = false }) => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -188,15 +189,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onForgotPassword,
               />
             </div>
 
-            <p className="mt-6 text-center text-sm text-gray-500">
-              {isRegistering ? 'Já tem uma conta?' : 'Não tem uma conta?'}
-              <button
-                onClick={() => setIsRegistering(!isRegistering)}
-                className="font-bold text-[#137fec] hover:underline ml-1"
-              >
-                {isRegistering ? 'Faça login' : 'Cadastre-se'}
-              </button>
-            </p>
+            {allowRegister && (
+              <p className="mt-6 text-center text-sm text-gray-500">
+                {isRegistering ? 'Já tem uma conta?' : 'Não tem uma conta?'}
+                <button
+                  onClick={() => setIsRegistering(!isRegistering)}
+                  className="font-bold text-[#137fec] hover:underline ml-1"
+                >
+                  {isRegistering ? 'Faça login' : 'Cadastre-se'}
+                </button>
+              </p>
+            )}
           </main>
         </div>
       </div>

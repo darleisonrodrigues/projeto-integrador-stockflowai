@@ -132,6 +132,61 @@ export const UsersPage: React.FC<UsersPageProps> = ({ onNotify }) => {
                 </button>
             </div>
 
+            {/* Access Links Card */}
+            <div className="bg-white dark:bg-[#111418] rounded-xl border border-[#dbe0e6] dark:border-gray-700 p-6 mb-6">
+                <h3 className="text-lg font-bold text-[#111418] dark:text-white mb-4 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[#137fec]">link</span>
+                    Links de Acesso
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label className="text-sm font-bold text-[#637588] dark:text-gray-400 mb-2 block">
+                            Link para Novos Gestores (Cadastro Liberado)
+                        </label>
+                        <div className="flex gap-2">
+                            <input
+                                readOnly
+                                value={window.location.origin}
+                                className="flex-1 px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 rounded-lg text-sm"
+                            />
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(window.location.origin);
+                                    onNotify({ type: 'success', message: 'Link copiado!' });
+                                }}
+                                className="px-4 py-2 bg-[#f0f4f8] hover:bg-[#dbe0e6] text-[#111418] font-bold rounded-lg transition-colors text-sm"
+                            >
+                                Copiar
+                            </button>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">Envie este link para professores ou quem deve ter acesso total.</p>
+                    </div>
+
+                    <div>
+                        <label className="text-sm font-bold text-[#637588] dark:text-gray-400 mb-2 block">
+                            Link para Colaboradores (Apenas Login)
+                        </label>
+                        <div className="flex gap-2">
+                            <input
+                                readOnly
+                                value={`${window.location.origin}/?mode=login`}
+                                className="flex-1 px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 rounded-lg text-sm"
+                            />
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(`${window.location.origin}/?mode=login`);
+                                    onNotify({ type: 'success', message: 'Link copiado!' });
+                                }}
+                                className="px-4 py-2 bg-[#f0f4f8] hover:bg-[#dbe0e6] text-[#111418] font-bold rounded-lg transition-colors text-sm"
+                            >
+                                Copiar
+                            </button>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">Envie este link para funcionários que você já cadastrou manualmente.</p>
+                    </div>
+                </div>
+            </div>
+
             {/* Content */}
             <div className="flex-1 overflow-hidden flex flex-col lg:flex-row gap-6">
                 {/* User List */}

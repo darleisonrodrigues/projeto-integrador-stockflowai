@@ -23,7 +23,7 @@ app.add_middleware(
 
 # Configuração
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-DB_PATH = "../backend/stockflow.db" 
+DB_PATH = os.getenv("DB_PATH", "../backend/stockflow.db") 
 
 if not GROQ_API_KEY:
     raise ValueError("GROQ_API_KEY not found in .env")

@@ -41,9 +41,18 @@ function App() {
   };
 
   if (!user) {
+    // Default: Register Allowed (Managers)
+    // ?mode=login -> Register Disabled (Collaborators)
+    const isLoginMode = new URLSearchParams(window.location.search).get('mode') === 'login';
+
     const authContent = authView === 'forgot-password'
       ? <ForgotPasswordPage onBack={() => setAuthView('login')} onNotify={handleNotify} />
-      : <LoginPage onLogin={handleLogin} onForgotPassword={() => setAuthView('forgot-password')} onNotify={handleNotify} />;
+      : <LoginPage
+        onLogin={handleLogin}
+        onForgotPassword={() => setAuthView('forgot-password')}
+        onNotify={handleNotify}
+        allowRegister={!isLoginMode}
+      />;
 
     return (
       <>

@@ -35,7 +35,7 @@ async function seed() {
 
     await new Promise((resolve, reject) => {
         db.run(
-            `INSERT OR IGNORE INTO users (id, name, email, password) VALUES (?, ?, ?, ?)`,
+            `INSERT OR IGNORE INTO users (id, name, email, password, role, active) VALUES (?, ?, ?, ?, 'ADMIN', 1)`,
             [userId, 'Administrador', 'admin@stockflow.com', hashedPassword],
             (err) => {
                 if (err) console.error('Error inserting user:', err.message);

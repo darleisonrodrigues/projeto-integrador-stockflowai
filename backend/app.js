@@ -244,7 +244,15 @@ app.use((err, req, res, next) => {
     next();
 });
 
-app.listen(PORT, () => {
+// Serve Static Frontend (Production)
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// SPA Fallback: Any route not handled by API returns index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});
+
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}/`);
     console.log(`Security: Helmet & Rate Limit enabled.`);
     console.log(`CORS Allowed Origins: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);

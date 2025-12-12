@@ -15,7 +15,7 @@ exports.register = (req, res) => {
 
     const hashedPassword = bcrypt.hashSync(password, 8);
 
-    const sql = `INSERT INTO users (id, name, email, password) VALUES (?, ?, ?, ?)`;
+    const sql = `INSERT INTO users (id, name, email, password, role, active) VALUES (?, ?, ?, ?, 'ADMIN', 1)`;
 
     db.run(sql, [id, name, email, hashedPassword], function (err) {
         if (err) {
@@ -26,8 +26,8 @@ exports.register = (req, res) => {
         }
 
         // Auto login após registro
-        // Novos usuários são EMPLOYEE por padrão, a menos que alterado manualmente no BD
-        const role = 'EMPLOYEE';
+        // CONFIGURAÇÃO DEMO: Novos usuários são ADMIN por padrão para facilitar avaliação
+        const role = 'ADMIN';
         const token = jwt.sign({ id: id, role: role }, SECRET_KEY, { expiresIn: 86400 }); // 24 horas
         res.status(201).json({ auth: true, token: token, user: { id, name, email, role } });
     });
