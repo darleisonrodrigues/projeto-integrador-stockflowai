@@ -416,7 +416,10 @@ export const ProductPage: React.FC<ProductPageProps> = ({ onNotify, goBack, filt
 
     const [customCategory, setCustomCategory] = useState('');
 
-    const categories = ['Todos', ...Array.from(new Set(products.map(p => p.category)))];
+    // Fix: Ensure default categories exist even if product list is empty
+    const defaultCategories = ['Papelaria', 'Eletrônicos', 'Móveis', 'Limpeza', 'Smartphones', 'Áudio', 'Periféricos', 'Outros'];
+    const existingCategories = Array.from(new Set(products.map(p => p.category)));
+    const categories = ['Todos', ...Array.from(new Set([...defaultCategories, ...existingCategories]))];
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();

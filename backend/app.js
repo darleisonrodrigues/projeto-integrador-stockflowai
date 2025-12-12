@@ -235,6 +235,25 @@ app.delete('/users/:id', adminOnly, UserController.delete);
 // Rotas de Analytics (Apenas Admin)
 app.get('/analytics', protectedRoute, AnalyticsController.getAnalytics);
 
+// Proxy para o Serviço de IA (Python)
+// O Frontend chama o Node (porta 3000), o Node chama o Python (porta 8000)
+const axios = require('axios');
+app.post('/api/ai/analyze', async (req, res) => {
+    try {
+        // Envia para o serviço interno (localhost do container)
+        const response = await axios.post('http://127.0.0.1:8000/analyze', req.body);
+        res.json(response.data);
+    } catch (error) {
+        console.error('Erro no Proxy da IA:', error.message);
+        // Tenta retornar a mensagem de erro do serviço Python ou um erro genérico
+        if (error.response) {
+            res.status(error.response.status).json(error.response.data);
+        } else {
+            res.status(500).json({ result: 'O serviço de IA está indisponível no momento.' });
+        }
+    }
+});
+
 // Tratamento de erros de Upload (Multer)
 app.use((err, req, res, next) => {
     if (err instanceof multer.MulterError) {

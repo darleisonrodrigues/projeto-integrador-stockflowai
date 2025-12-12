@@ -35,22 +35,16 @@ export const ReportsPage: React.FC = () => {
         setLoading(true);
 
         try {
-            // Chamada direta ao serviço Python (ignorando a API principal em Node por enquanto ou usando proxy)
-            // Idealmente faríamos proxy via Node, mas para o MVP podemos acessar localhost:8000 se o CORS permitir
-            // Ou assumimos que o usuário configurará o proxy. Vamos tentar o fetch direto primeiro.
-            const response = await fetch('http://localhost:8000/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: userMsg.content })
-            });
+            // Chamada via Proxy do Node.js (BFF - Backend for Frontend)
+            // O frontend chama a API principal, que redireciona para o serviço Python interno
+            const response = await api.post('/ai/analyze', { query: userMsg.content });
 
-            if (!response.ok) throw new Error('Falha ao conectar com a IA');
-
-            const data = await response.json();
+            // Adapter: A API api.post já retorna o JSON, não o Response object
+            const result = response.result;
 
             const aiMsg: Message = {
                 role: 'assistant',
-                content: typeof data.result === 'string' ? data.result : JSON.stringify(data.result),
+                content: typeof result === 'string' ? result : JSON.stringify(result),
                 timestamp: new Date()
             };
             setMessages((prev: Message[]) => [...prev, aiMsg]);
