@@ -79,7 +79,12 @@ app.use(cors({
         const cleanAllowed = allowedOrigins.map(url => url.replace(/\/$/, ''));
 
         if (cleanAllowed.indexOf(cleanOrigin) === -1) {
-            // For debugging purposes, we might want to allow it temporarily or log it better
+            // "Resolva de uma vez por todas": Allow any Railway app domain
+            // This prevents errors if the user changes the project name or URL
+            if (cleanOrigin.endsWith('.railway.app')) {
+                return callback(null, true);
+            }
+
             console.error(`CORS Blocked: ${origin}. Allowed: ${allowedOrigins}`);
             var msg = 'A política CORS para este site não permite acesso da origem especificada.';
             return callback(new Error(msg), false);
