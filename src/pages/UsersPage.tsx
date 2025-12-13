@@ -259,7 +259,7 @@ export const UsersPage: React.FC<UsersPageProps> = ({ onNotify }) => {
 
                 {/* Create/Edit User Form Side Panel */}
                 {showForm && (
-                    <div className="w-full lg:w-96 bg-white dark:bg-[#111418] rounded-xl border border-[#dbe0e6] dark:border-gray-700 p-6 h-fit animate-fade-in">
+                    <div className="w-full lg:w-96 bg-white dark:bg-[#111418] rounded-xl border border-[#dbe0e6] dark:border-gray-700 p-6 overflow-y-auto max-h-full animate-fade-in flex-none">
                         <h2 className="text-xl font-bold text-[#111418] dark:text-white mb-6">
                             {editingUser ? 'Editar Usuário' : 'Criar Novo Usuário'}
                         </h2>
