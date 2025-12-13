@@ -37,7 +37,7 @@ export const ReportsPage: React.FC = () => {
         try {
             // Chamada via Proxy do Node.js (BFF - Backend for Frontend)
             // O frontend chama a API principal, que redireciona para o serviço Python interno
-            const response = await api.post('/ai/analyze', { query: userMsg.content });
+            const response = await api.post('/api/ai/analyze', { query: userMsg.content });
 
             // Adapter: A API api.post já retorna o JSON, não o Response object
             const result = response.result;
@@ -51,7 +51,7 @@ export const ReportsPage: React.FC = () => {
         } catch (error) {
             const errorMsg: Message = {
                 role: 'assistant',
-                content: 'Desculpe, tive um problema ao analisar seus dados. Verifique se o serviço de IA está rodando em http://localhost:8000',
+                content: 'Desculpe, tive um problema ao analisar seus dados. Por favor, tente novamente mais tarde ou contate o suporte.',
                 timestamp: new Date()
             };
             setMessages((prev: Message[]) => [...prev, errorMsg]);
