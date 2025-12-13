@@ -133,7 +133,7 @@ const protectedRoute = [authMiddleware.verifyToken];
  *         description: Criado com sucesso
  */
 app.post('/suppliers', protectedRoute, SupplierController.create);
-app.get('/suppliers', protectedRoute, SupplierController.getAll);
+app.get('/suppliers', SupplierController.getAll);
 app.put('/suppliers/:id', protectedRoute, SupplierController.update);
 app.delete('/suppliers/:id', adminOnly, SupplierController.delete); // Admin Only
 
@@ -175,7 +175,7 @@ app.post('/products',
  *       201:
  *         description: Produto criado
  */
-app.get('/products', protectedRoute, ProductController.getAll);
+app.get('/products', ProductController.getAll);
 app.put('/products/:id', protectedRoute, upload.single('image'), ProductController.update);
 app.delete('/products/:id', adminOnly, ProductController.delete); // Admin Only
 
@@ -203,7 +203,7 @@ app.get('/products/:productId/suppliers', protectedRoute, AssociationController.
  *         description: Pedido criado
  */
 app.post('/orders', protectedRoute, OrderController.create);
-app.get('/orders', protectedRoute, OrderController.list);
+app.get('/orders', OrderController.list);
 app.post('/orders/:id/receive', protectedRoute, OrderController.receive);
 app.put('/orders/:id', protectedRoute, OrderController.update);
 app.delete('/orders/:id', adminOnly, OrderController.delete); // Admin Only
