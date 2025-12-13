@@ -383,6 +383,45 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onNotify, goBack }) 
                                 </div>
                             </div>
 
+                            {/* Danger Zone - Reset Database */}
+                            <div className="mt-8 border-t border-red-200 dark:border-red-900/50 pt-8">
+                                <h3 className="text-lg font-bold text-red-600 dark:text-red-500 mb-4 flex items-center gap-2">
+                                    <span className="material-symbols-outlined">warning</span>
+                                    Zona de Perigo
+                                </h3>
+                                <div className="bg-red-50 dark:bg-red-900/10 p-6 rounded-2xl border border-red-200 dark:border-red-900/30">
+                                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                                        <div>
+                                            <h4 className="text-base font-bold text-[#111418] dark:text-white mb-1">Resetar Aplicação</h4>
+                                            <p className="text-sm text-[#637588] dark:text-gray-400">
+                                                Apaga <strong>TODOS</strong> os produtos, vendas, pedidos e movimentações do banco de dados.<br />
+                                                Essa ação é irreversível e ideal para limpar dados de teste na produção.
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={async () => {
+                                                if (confirm('TEM CERTEZA? Isso apagará TODOS os dados do sistema (exceto usuários). Essa ação NÃO pode ser desfeita.')) {
+                                                    setLoading(true);
+                                                    try {
+                                                        const response = await db.resetDatabase(); // Need to implement in db.ts
+                                                        onNotify({ type: 'success', message: 'Sistema resetado com sucesso!' });
+                                                        setTimeout(() => window.location.reload(), 2000);
+                                                    } catch (err: any) {
+                                                        onNotify({ type: 'error', message: err.message || 'Erro ao resetar.' });
+                                                    } finally {
+                                                        setLoading(false);
+                                                    }
+                                                }
+                                            }}
+                                            className="px-6 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg shadow-red-600/20 whitespace-nowrap"
+                                        >
+                                            Resetar Tudo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     )}
                 </div>

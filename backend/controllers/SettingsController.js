@@ -56,3 +56,35 @@ exports.uploadBackup = [
         });
     }
 ];
+
+exports.resetDatabase = (req, res) => {
+    console.log('Resetting entire database via API...');
+    const tablesToClear = [
+        'sale_items',
+        'sales',
+        'order_items',
+        'orders',
+        'stock_movements',
+        'product_suppliers',
+        'products',
+        'suppliers',
+        'clients',
+        'settings',
+        // 'users' // Keep users so the current admin doesn't get kicked out immediately? 
+        // User asked to "clean everything not wanting any data even logins".
+        'users'
+    ];
+
+    db.serialize(() => {
+        tablesToClear.forEach(table => {
+            db.run(`DELETE FROM ${table}`, (err) => {
+                if (err) console.error(`Error clearing ${table}:`, err.message);
+            });
+        });
+    });
+
+    // Provide a delay to ensure deletions complete
+    setTimeout(() => {
+        res.json({ message: 'Banco de dados resetado com sucesso! Todos os dados foram apagados.' });
+    }, 2000);
+};

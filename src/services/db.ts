@@ -135,6 +135,10 @@ class DatabaseService {
     formData.append('backup', file);
     await api.post('/api/backup/restore', formData);
   }
+
+  async resetDatabase(): Promise<void> {
+    await api.post('/api/database/reset', {});
+  }
 }
 
 export const db = new DatabaseService();

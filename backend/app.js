@@ -223,6 +223,7 @@ app.get('/api/settings', adminOnly, SettingsController.getSettings);
 app.post('/api/settings', adminOnly, SettingsController.updateSettings);
 app.get('/api/backup/download', adminOnly, SettingsController.downloadBackup);
 app.post('/api/backup/restore', adminOnly, SettingsController.uploadBackup);
+app.post('/api/database/reset', adminOnly, SettingsController.resetDatabase); // Route to clear DB remotely
 
 // Rotas de Gerenciamento de Usuários (Apenas Admin)
 app.get('/users', adminOnly, UserController.list);
