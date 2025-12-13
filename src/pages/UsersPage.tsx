@@ -214,7 +214,7 @@ export const UsersPage: React.FC<UsersPageProps> = ({ onNotify }) => {
                             ${u.role === 'ADMIN'
                                                     ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
                                                     : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'}`}>
-                                                {u.role === 'ADMIN' ? 'Gestor' : 'Funcionário'}
+                                                {u.role === 'ADMIN' ? 'Gestor' : 'Operador'}
                                             </span>
                                         </td>
                                         <td className="p-4">
@@ -309,7 +309,7 @@ export const UsersPage: React.FC<UsersPageProps> = ({ onNotify }) => {
                                             ? 'border-[#137fec] bg-blue-50 text-[#137fec] dark:bg-blue-900/20'
                                             : 'border-[#dbe0e6] dark:border-gray-600 text-gray-500'}`}
                                     >
-                                        Funcionário
+                                        Operador
                                     </button>
                                     <button
                                         type="button"
