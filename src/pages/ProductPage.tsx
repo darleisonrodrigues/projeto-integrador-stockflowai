@@ -709,23 +709,23 @@ export const ProductPage: React.FC<ProductPageProps> = ({ onNotify, goBack, filt
                         </div>
                     ) : (
                         displayedProducts.map(p => (
-                            <div key={p.id} className="bg-white dark:bg-[#111418] p-4 rounded-xl border border-[#dbe0e6] dark:border-gray-700 flex justify-between items-center shadow-sm hover:shadow-md transition-all duration-200">
-                                <div className="flex items-center gap-4">
+                            <div key={p.id} className="bg-white dark:bg-[#111418] p-4 rounded-xl border border-[#dbe0e6] dark:border-gray-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm hover:shadow-md transition-all duration-200">
+                                <div className="flex items-center gap-4 w-full md:w-auto">
                                     {p.imageUrl ? (
-                                        <img src={p.imageUrl.startsWith('http') ? p.imageUrl : API_URL + p.imageUrl} alt={p.name} className="w-16 h-16 object-cover rounded-lg bg-[#f0f2f5]" />
+                                        <img src={p.imageUrl.startsWith('http') ? p.imageUrl : API_URL + p.imageUrl} alt={p.name} className="w-16 h-16 object-cover rounded-lg bg-[#f0f2f5] flex-shrink-0" />
                                     ) : (
-                                        <div className="w-16 h-16 bg-[#f0f2f5] dark:bg-gray-800 rounded-lg flex items-center justify-center text-[#9ca3af]">
+                                        <div className="w-16 h-16 bg-[#f0f2f5] dark:bg-gray-800 rounded-lg flex items-center justify-center text-[#9ca3af] flex-shrink-0">
                                             <span className="material-symbols-outlined">image</span>
                                         </div>
                                     )}
-                                    <div>
-                                        <h3 className="font-bold text-lg text-[#111418] dark:text-white">{p.name}</h3>
+                                    <div className="min-w-0">
+                                        <h3 className="font-bold text-lg text-[#111418] dark:text-white truncate">{p.name}</h3>
                                         <p className="text-sm text-[#637588]">Barcode: {p.barcode} | Qtd: {p.quantity}</p>
                                         <span className="inline-block mt-2 text-xs bg-[#f0f2f5] dark:bg-gray-800 px-2 py-1 rounded text-[#111418] dark:text-gray-300 font-medium">{p.category}</span>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <button onClick={() => handleSelectProduct(p)} className="text-[#137fec] font-bold hover:underline text-sm px-3 py-2">
+                                <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+                                    <button onClick={() => handleSelectProduct(p)} className="text-[#137fec] font-bold hover:underline text-sm px-3 py-2 whitespace-nowrap">
                                         Gerenciar Produto
                                     </button>
                                     {user.role === 'ADMIN' && (

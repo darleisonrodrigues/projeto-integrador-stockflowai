@@ -194,66 +194,68 @@ export const UsersPage: React.FC<UsersPageProps> = ({ onNotify }) => {
                     {loading && users.length === 0 ? (
                         <div className="p-8 text-center text-gray-500">Carregando...</div>
                     ) : (
-                        <table className="w-full text-left border-collapse">
-                            <thead className="bg-gray-50 dark:bg-[#1a1d21] sticky top-0 z-10">
-                                <tr>
-                                    <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700">Nome</th>
-                                    <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700">Email</th>
-                                    <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700">Função</th>
-                                    <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700">Status</th>
-                                    <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700 text-right">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {users.map(u => (
-                                    <tr key={u.id} className="border-b border-[#dbe0e6] dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                                        <td className="p-4 text-[#111418] dark:text-white font-medium">{u.name}</td>
-                                        <td className="p-4 text-sm text-[#637588] dark:text-gray-400">{u.email}</td>
-                                        <td className="p-4">
-                                            <span className={`px-2 py-1 rounded text-xs font-bold uppercase tracking-wide
-                            ${u.role === 'ADMIN'
-                                                    ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
-                                                    : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'}`}>
-                                                {u.role === 'ADMIN' ? 'Gestor' : 'Operador'}
-                                            </span>
-                                        </td>
-                                        <td className="p-4">
-                                            <span className={`flex items-center gap-1.5 text-sm font-medium ${u.active ? 'text-green-600 dark:text-green-400' : 'text-red-500'}`}>
-                                                <span className={`w-2 h-2 rounded-full ${u.active ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                                                {u.active ? 'Ativo' : 'Inativo'}
-                                            </span>
-                                        </td>
-                                        <td className="p-4 text-right">
-                                            <div className="flex items-center justify-end gap-2">
-                                                <button
-                                                    onClick={() => startEditing(u)}
-                                                    className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-                                                    title="Editar Usuário"
-                                                >
-                                                    <span className="material-symbols-outlined">edit</span>
-                                                </button>
-                                                <button
-                                                    onClick={() => handleToggleActive(u)}
-                                                    className={`p-2 rounded-lg transition-colors ${u.active
-                                                        ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
-                                                        : 'text-green-500 hover:bg-green-50 dark:hover:bg-green-900/20'}`}
-                                                    title={u.active ? "Desativar Acesso" : "Reativar Acesso"}
-                                                >
-                                                    <span className="material-symbols-outlined">{u.active ? 'block' : 'check_circle'}</span>
-                                                </button>
-                                                <button
-                                                    onClick={() => setUserToDelete(u)}
-                                                    className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                                                    title="Excluir Usuário"
-                                                >
-                                                    <span className="material-symbols-outlined">delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse min-w-[800px]">
+                                <thead className="bg-gray-50 dark:bg-[#1a1d21] sticky top-0 z-10">
+                                    <tr>
+                                        <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700">Nome</th>
+                                        <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700">Email</th>
+                                        <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700">Função</th>
+                                        <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700">Status</th>
+                                        <th className="p-4 text-sm font-bold text-[#637588] dark:text-gray-400 border-b border-[#dbe0e6] dark:border-gray-700 text-right">Ações</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {users.map(u => (
+                                        <tr key={u.id} className="border-b border-[#dbe0e6] dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                            <td className="p-4 text-[#111418] dark:text-white font-medium">{u.name}</td>
+                                            <td className="p-4 text-sm text-[#637588] dark:text-gray-400">{u.email}</td>
+                                            <td className="p-4">
+                                                <span className={`px-2 py-1 rounded text-xs font-bold uppercase tracking-wide
+                            ${u.role === 'ADMIN'
+                                                        ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
+                                                        : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'}`}>
+                                                    {u.role === 'ADMIN' ? 'Gestor' : 'Operador'}
+                                                </span>
+                                            </td>
+                                            <td className="p-4">
+                                                <span className={`flex items-center gap-1.5 text-sm font-medium ${u.active ? 'text-green-600 dark:text-green-400' : 'text-red-500'}`}>
+                                                    <span className={`w-2 h-2 rounded-full ${u.active ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                                                    {u.active ? 'Ativo' : 'Inativo'}
+                                                </span>
+                                            </td>
+                                            <td className="p-4 text-right">
+                                                <div className="flex items-center justify-end gap-2">
+                                                    <button
+                                                        onClick={() => startEditing(u)}
+                                                        className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                                                        title="Editar Usuário"
+                                                    >
+                                                        <span className="material-symbols-outlined">edit</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleToggleActive(u)}
+                                                        className={`p-2 rounded-lg transition-colors ${u.active
+                                                            ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
+                                                            : 'text-green-500 hover:bg-green-50 dark:hover:bg-green-900/20'}`}
+                                                        title={u.active ? "Desativar Acesso" : "Reativar Acesso"}
+                                                    >
+                                                        <span className="material-symbols-outlined">{u.active ? 'block' : 'check_circle'}</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setUserToDelete(u)}
+                                                        className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                                                        title="Excluir Usuário"
+                                                    >
+                                                        <span className="material-symbols-outlined">delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     )}
                 </div>
 
