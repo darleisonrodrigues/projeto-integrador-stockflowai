@@ -75,7 +75,7 @@ async function seed() {
         await new Promise((resolve, reject) => {
             db.run(
                 `INSERT OR IGNORE INTO products (id, name, barcode, description, quantity, category, expiryDate, imageUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                [id, p.name, barcode, 'Descrição do produto demo', p.quantity, p.category, '2025-12-31', p.imageUrl || ''],
+                [id, p.name, barcode, 'Descrição do produto demo', p.quantity, p.category, null, p.imageUrl || ''],
                 async (err) => {
                     if (err) {
                         console.error('Error inserting product:', err.message);
