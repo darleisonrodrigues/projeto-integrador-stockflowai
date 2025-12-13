@@ -4,7 +4,7 @@ const crypto = require('crypto');
 exports.create = (req, res, next) => {
     const { name, barcode, description, quantity, category, expiryDate } = req.body;
     // Se houver arquivo, monta a URL. Caso contrário, usa null ou string vazia.
-    const imageUrl = req.file ? `http://localhost:3000/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
     const id = crypto.randomUUID();
 
     // A validação agora é feita pelo express-validator no app.js
@@ -72,7 +72,7 @@ exports.update = (req, res) => {
     // No entanto, updates SQL padrão requerem definir campos.
     // Vamos assumir por enquanto que atualizamos todos os campos de texto. Lidar com imagem na atualização geralmente requer verificar se um novo arquivo foi enviado.
 
-    const imageUrl = req.file ? `http://localhost:3000/uploads/${req.file.filename}` : undefined;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : undefined;
 
     if (!name || !barcode || !description || quantity === undefined || !category) {
         return res.status(400).json({ error: 'Campos obrigatórios faltando.' });

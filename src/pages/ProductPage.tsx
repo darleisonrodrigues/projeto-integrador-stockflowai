@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../services/db';
+import { API_URL } from '../services/api';
 import { Product, Supplier, Notification, User } from '../types';
 
 interface ProductPageProps {
@@ -177,7 +178,7 @@ const ProductDetails: React.FC<{
                                                     <p className="text-sm font-bold text-[#137fec]">{imageFile.name}</p>
                                                 </div>
                                             ) : product.imageUrl ? (
-                                                <img src={product.imageUrl} className="w-full h-full object-cover" alt="Current" />
+                                                <img src={product.imageUrl.startsWith('http') ? product.imageUrl : API_URL + product.imageUrl} className="w-full h-full object-cover" alt="Current" />
                                             ) : (
                                                 <span className="material-symbols-outlined text-[#9ca3af] text-4xl">cloud_upload</span>
                                             )}
@@ -237,7 +238,7 @@ const ProductDetails: React.FC<{
                                 <div className="flex flex-col gap-6">
                                     <div
                                         className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg bg-[#f0f2f5] dark:bg-gray-800"
-                                        style={{ backgroundImage: product.imageUrl ? `url('${product.imageUrl}')` : 'none' }}
+                                        style={{ backgroundImage: product.imageUrl ? `url('${product.imageUrl.startsWith('http') ? product.imageUrl : API_URL + product.imageUrl}')` : 'none' }}
                                     >
                                         {!product.imageUrl && (
                                             <div className="flex items-center justify-center h-full text-[#9ca3af]">
@@ -711,7 +712,7 @@ export const ProductPage: React.FC<ProductPageProps> = ({ onNotify, goBack, filt
                             <div key={p.id} className="bg-white dark:bg-[#111418] p-4 rounded-xl border border-[#dbe0e6] dark:border-gray-700 flex justify-between items-center shadow-sm hover:shadow-md transition-all duration-200">
                                 <div className="flex items-center gap-4">
                                     {p.imageUrl ? (
-                                        <img src={p.imageUrl} alt={p.name} className="w-16 h-16 object-cover rounded-lg bg-[#f0f2f5]" />
+                                        <img src={p.imageUrl.startsWith('http') ? p.imageUrl : API_URL + p.imageUrl} alt={p.name} className="w-16 h-16 object-cover rounded-lg bg-[#f0f2f5]" />
                                     ) : (
                                         <div className="w-16 h-16 bg-[#f0f2f5] dark:bg-gray-800 rounded-lg flex items-center justify-center text-[#9ca3af]">
                                             <span className="material-symbols-outlined">image</span>
